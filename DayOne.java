@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class DayOne {
     public static void main(String[] args) {
-        ArrayList<String> fileData = getFileData("src/Day1Input.txt");
+        ArrayList<String> fileData = getFileData("src/DayOneInput.txt");
         System.out.println(fileData);
         ArrayList<Integer> firstList = new ArrayList<Integer>();
         ArrayList<Integer> secondList = new ArrayList<Integer>();
@@ -17,25 +17,30 @@ public class DayOne {
             firstList.add(i, firstNum);
             secondList.add(i, secondNum);
         }
-        int count = 0;
-        int tally = 0;
-        int ind2 = 0;
+        int total = 0;
         for (int i = 0; i < firstList.size(); i++) {
-            for (int j = 0; j < firstList.size() - 1; j++) {
-                ind2 = j;
-                if (firstList.get(j) < firstList.get(j + 1)) {
-                    tally++;
+            int least1 = firstList.get(0);
+            int ind1 = 0;
+            int least2 = secondList.get(0);
+            int ind2 = 0;
+            for (int a = 0; a < firstList.size(); a++) {
+                if (firstList.get(a) < least1) {
+                    least1 = firstList.get(a);
+                    ind1 = a;
                 }
             }
-            if (tally == firstList.size()) {
-                int temp = firstList.get(ind2);
-                firstList.remove(ind2);
-                firstList.add(count, temp);
-                count++;
+            firstList.remove(ind1);
+            for (int b = 0; b < secondList.size(); b++) {
+                if (secondList.get(b) < least2) {
+                    least2 = secondList.get(b);
+                    ind2 = b;
+                }
             }
+            secondList.remove(ind2);
+            total += Math.abs(least1 - least2);
         }
+        System.out.println(total);
     }
-
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
