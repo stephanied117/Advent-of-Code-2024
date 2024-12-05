@@ -5,17 +5,29 @@ import java.util.Scanner;
 
 public class DayTwo {
     public static void main(String[] args) {
-        ArrayList<String> fileData = getFileData("src/DayOneInput.txt");
+        ArrayList<String> fileData = getFileData("DayTwoInput.txt");
         System.out.println(fileData);
+        int num = 0;
         for (int i = 0; i < fileData.size(); i++) {
+            ArrayList<Integer> report = new ArrayList<>();
             for (int j = 0; j < fileData.get(i).length(); j++) {
-                ArrayList<Integer> report = new ArrayList<Integer>();
-                int prior = 0;
-                if (fileData.get(i).indexOf(" ") != -1) {
-                   int space = fileData.get(i).indexOf(" ");
-                   report.add(Integer.parseInt(fileData.get(i).substring(prior,space)));
-
+                int ind = fileData.get(i).indexOf(" ");
+                String temp = fileData.get(i).substring(0, ind) + fileData.get(i).substring(ind + 1);
+                if (j == 0) {
+                    num = Integer.parseInt(fileData.get(i).substring(0, ind));
+                } else if (j == fileData.get(i).length() - 1) {
+                    num = Integer.parseInt(fileData.get(i).substring(ind));
+                } else {
+                    int ind2 = temp.indexOf(" ");
+                    num = Integer.parseInt(fileData.get(i).substring(ind + 1, ind2 + 1));
                 }
+                System.out.println(temp);
+                fileData.add(i, temp);
+                fileData.remove(i + 1);
+                System.out.println(fileData);
+                System.out.println(num);
+                report.add(num);
+                System.out.println(report);
             }
         }
     }
