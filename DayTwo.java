@@ -7,28 +7,34 @@ public class DayTwo {
     public static void main(String[] args) {
         ArrayList<String> fileData = getFileData("DayTwoInput.txt");
         System.out.println(fileData);
-        int num = 0;
+        ArrayList<Integer> report = new ArrayList<>();
+        ArrayList<ArrayList> newFileData = new ArrayList<>();
+        String temp = "";
+        int safe = 0;
         for (int i = 0; i < fileData.size(); i++) {
-            ArrayList<Integer> report = new ArrayList<>();
             for (int j = 0; j < fileData.get(i).length(); j++) {
-                int ind = fileData.get(i).indexOf(" ");
-                String temp = fileData.get(i).substring(0, ind) + fileData.get(i).substring(ind + 1);
-                if (j == 0) {
-                    num = Integer.parseInt(fileData.get(i).substring(0, ind));
-                } else if (j == fileData.get(i).length() - 1) {
-                    num = Integer.parseInt(fileData.get(i).substring(ind));
+                if (!fileData.get(i).substring(j, j + 1).equals(" ")) {
+                    temp += fileData.get(i).substring(j, j + 1);
                 } else {
-                    int ind2 = temp.indexOf(" ");
-                    num = Integer.parseInt(fileData.get(i).substring(ind + 1, ind2 + 1));
+                    report.add(Integer.parseInt(temp));
+                    temp = "";
                 }
-                System.out.println(temp);
-                fileData.add(i, temp);
-                fileData.remove(i + 1);
-                System.out.println(fileData);
-                System.out.println(num);
-                report.add(num);
-                System.out.println(report);
             }
+            report.add(Integer.parseInt(temp));
+            temp = "";
+            newFileData.add(report);
+            report = new ArrayList<>();
+        }
+        System.out.println(newFileData);
+        for (int i = 0; i < newFileData.size(); i++) {
+            for (int j = 0; j < newFileData.get(i).size(); j++) {
+                int one = ;
+                int two = ;
+                if (two % one == 1 || two % one == 2) {
+                    safe++;
+                }
+            }
+            if (safe == )
         }
     }
     public static ArrayList<String> getFileData(String fileName) {
