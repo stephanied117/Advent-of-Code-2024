@@ -3,38 +3,27 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DayTwo {
+public class DayThree {
     public static void main(String[] args) {
-        ArrayList<String> fileData = getFileData("DayTwoInput.txt");
+        ArrayList<String> fileData = getFileData("DayThreeInput.txt");
         System.out.println(fileData);
-        ArrayList<Integer> report = new ArrayList<>();
+        ArrayList<String> report = new ArrayList<>();
         ArrayList<ArrayList> newFileData = new ArrayList<>();
         String temp = "";
-        int safe = 0;
         for (int i = 0; i < fileData.size(); i++) {
-            for (int j = 0; j < fileData.get(i).length(); j++) {
-                if (!fileData.get(i).substring(j, j + 1).equals(" ")) {
-                    temp += fileData.get(i).substring(j, j + 1);
-                } else {
-                    report.add(Integer.parseInt(temp));
-                    temp = "";
+            for (int j = 0; j < fileData.get(i).length() - 3; j++) {
+                if (fileData.get(i).substring(j, j + 4).equals("mul(")) {
+                    String temp2 = fileData.get(i).substring(j + 4);
+
+                    temp += fileData.get(i).substring(j, j + 4);
                 }
             }
-            report.add(Integer.parseInt(temp));
-            temp = "";
+            report.add(temp);
             newFileData.add(report);
             report = new ArrayList<>();
+            temp = "";
         }
         System.out.println(newFileData);
-        for (int i = 0; i < newFileData.size(); i++) {
-            for (int j = 0; j < newFileData.get(i).size(); j++) {
-
-                //if (two % one == 1 || two % one == 2) {
-                 //   safe++;
-                //}
-            }
-            //if (safe == )
-        }
     }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
