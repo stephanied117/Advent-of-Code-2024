@@ -3,26 +3,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DayThree {
+public class DayFive {
     public static void main(String[] args) {
-        ArrayList<String> fileData = getFileData("DayThreeInput.txt");
+        ArrayList<String> fileData = getFileData("DayFiveInput.txt");
         System.out.println(fileData);
-        ArrayList<String> report = new ArrayList<>();
-        ArrayList<ArrayList> newFileData = new ArrayList<>();
-        String temp = "";
-        for (int i = 0; i < fileData.size(); i++) {
-            for (int j = 0; j < fileData.get(i).length() - 4; j++) {
-                if (fileData.get(i).substring(j, j + 4).equals("mul(")) {
-                    String end = fileData.get(i).substring(j + 4);
-                    temp += fileData.get(i).substring(j, j + 5);
-                }
+        ArrayList<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < 1177; i++) {
+            if (fileData.get(i).contains(numbers.get())) {
+
             }
-            report.add(temp);
-            newFileData.add(report);
-            report = new ArrayList<>();
-            temp = "";
         }
-        System.out.println(newFileData);
     }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
