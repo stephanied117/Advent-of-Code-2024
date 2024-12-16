@@ -7,33 +7,33 @@ public class DayTwo {
     public static void main(String[] args) {
         ArrayList<String> fileData = getFileData("DayTwoInput.txt");
         System.out.println(fileData);
-        ArrayList<Integer> report = new ArrayList<>();
-        ArrayList<ArrayList> newFileData = new ArrayList<>();
-        String temp = "";
-        int safe = 0;
+        int tally = 0;
         for (int i = 0; i < fileData.size(); i++) {
-            for (int j = 0; j < fileData.get(i).length(); j++) {
-                if (!fileData.get(i).substring(j, j + 1).equals(" ")) {
-                    temp += fileData.get(i).substring(j, j + 1);
-                } else {
-                    report.add(Integer.parseInt(temp));
-                    temp = "";
+            ArrayList<Integer> newFileData = new ArrayList<>();
+            for (int j = 0; j < fileData.get(i).length() + 2; j++) {
+                int ind = fileData.get(i).indexOf(" ");
+                newFileData.add(Integer.parseInt(fileData.get(i).substring(0, ind)));
+                fileData.set(i, fileData.get(i).substring(ind + 1));
+                fileData.remove(i + 1);
+            }
+            newFileData.add(Integer.parseInt(fileData.get(i).substring(0)));
+            System.out.println(fileData);
+            System.out.println(newFileData);
+            int inc = 0;
+            int dec = 0;
+            for (int k = 0; k < newFileData.size() - 1; k++) {
+                int first = newFileData.get(k);
+                int second = newFileData.get(k + 1);
+                if (first % second == 1 || first % second == 2 || first % second == 3) {
+                    inc++;
+                } else if (second % first == 1 || second % first == 2 || second % first == 3) {
+                    dec++;
                 }
             }
-            report.add(Integer.parseInt(temp));
-            temp = "";
-            newFileData.add(report);
-            report = new ArrayList<>();
-        }
-        System.out.println(newFileData);
-        for (int i = 0; i < newFileData.size(); i++) {
-            for (int j = 0; j < newFileData.get(i).size(); j++) {
-
-                //if (two % one == 1 || two % one == 2) {
-                 //   safe++;
-                //}
+            if (inc == newFileData.size() || dec == newFileData.size()) {
+                tally++;
+                System.out.println(tally);
             }
-            //if (safe == )
         }
     }
     public static ArrayList<String> getFileData(String fileName) {
