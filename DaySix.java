@@ -110,6 +110,7 @@ public class DaySix {
             }
         }
     }
+
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
