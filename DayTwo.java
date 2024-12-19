@@ -24,16 +24,16 @@ public class DayTwo {
             for (int k = 0; k < newFileData.size() - 1; k++) {
                 int first = newFileData.get(k);
                 int second = newFileData.get(k + 1);
-                if (first % second == 1 || first % second == 2 || first % second == 3) {
+                if (first - second == 1 || first - second == 2 || first - second == 3) {
                     inc++;
                 } else if (second % first == 1 || second % first == 2 || second % first == 3) {
                     dec++;
                 }
             }
-            if (inc == newFileData.size() || dec == newFileData.size()) {
+            if (inc == newFileData.size() - 1 || dec == newFileData.size() - 1) {
                 tally++;
-                System.out.println(tally);
             }
+            System.out.println(tally);
         }
     }
     public static ArrayList<String> getFileData(String fileName) {

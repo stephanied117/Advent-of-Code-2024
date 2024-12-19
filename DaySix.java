@@ -11,8 +11,6 @@ public class DaySix {
         int guardX = 0;
         int guardY = 0;
         int tagInd = -1;
-        int x = guardX;
-        int y = guardY;
         String replaceA = "";
         String replaceB = "";
         String guardSym = "^";
@@ -21,91 +19,76 @@ public class DaySix {
             if (fileData.get(i).indexOf("^") != -1) {
                 guardX = fileData.get(i).indexOf("^");
                 guardY = i;
-                x = guardX;
-                y = guardY;
             }
         }
-        //
-        while ((guardX != -1 && guardSym.equals("<")) || (guardX != fileData.get(0).length() && guardSym.equals(">")) || (guardY != -1 && guardSym.equals("^")) || (guardY != fileData.size() && guardSym.equals("v"))) {
-            if (guardSym.equals(">")) {
-                while (tagInd == -1) {
-                    if (!fileData.get(y).substring(x + 1, x + 2).equals("#")) {
-                        replaceA = fileData.get(y).substring(0, x + 1) + "X>" + fileData.get(y).substring(x + 3);
-                        //System.out.println(replaceA);
-                        fileData.set(y,replaceA);
-                    } else {
-                        tagInd = -1;
-                    }
-                    x++;
+        while ((guardX >= 0 && guardSym.equals("<")) || (guardX <= fileData.get(0).length() - 1 && guardSym.equals(">")) || (guardY >= 0 && guardSym.equals("^")) || (guardY <= fileData.size() - 1 && guardSym.equals("v"))) {
+            for (int i = 0; i < fileData.size(); i++) {
+                if (fileData.get(i).indexOf(guardSym) != -1) {
+                    guardX = fileData.get(i).indexOf(guardSym);
+                    guardY = i;
                 }
-                guardSym = "v";
-            } else if (guardSym.equals("<")) {
-                while (tagInd == -1) {
-                    if (!fileData.get(y).substring(x - 1, x).equals("#")) {
-                        replaceA = fileData.get(y).substring(0, x - 1) + "<X" + fileData.get(y).substring(x + 2);
+            }
+            if (guardSym.equals("v")) {
+                for (int j = guardY + 1; j < fileData.size(); j++) {
+                    if (!fileData.get(j).substring(guardX, guardX + 1).equals("#")) {
+                        replaceA = fileData.get(j - 1).substring(0, guardX) + "X" + fileData.get(guardY).substring(guardX + 1);
+                        replaceB = fileData.get(j).substring(0, guardX) + "v" + fileData.get(guardY).substring(guardX + 1);
                         //System.out.println(replaceA);
-                        fileData.set(y,replaceA);
+                        //System.out.println(replaceB);
+                        fileData.set(guardY,replaceA);
+                        fileData.set(guardY + 1,replaceB);
                     } else {
-                        tagInd = -1;
+                        guardSym = "<";
+                        for (int i = 0; i < fileData.size(); i++) {
+                            System.out.println(fileData.get(i));
+                        }
+                        System.out.println();
                     }
-                    x--;
                 }
-                guardSym = "^";
             } else if (guardSym.equals("^")) {
-                while (tagInd == -1) {
-                    if (!fileData.get(y + 1).substring(x, x + 1).equals("#")) {
-                        replaceA = fileData.get(y).substring(x - 1, x) + "X" + fileData.get(y).substring(x + 1);
-                        replaceB = fileData.get(y - 1).substring(x - 1, x) + "^" + fileData.get(y).substring(x + 1);
+                for (int j = guardY - 1; j > -1; j--) {
+                    if (!fileData.get(j).substring(guardX, guardX + 1).equals("#")) {
+                        replaceA = fileData.get(j + 1).substring(0, guardX) + "X" + fileData.get(guardY).substring(guardX + 1);
+                        replaceB = fileData.get(j).substring(0, guardX) + "^" + fileData.get(guardY).substring(guardX + 1);
                         //System.out.println(replaceA);
                         //System.out.println(replaceB);
-                        fileData.set(y,replaceA);
-                        fileData.set(y + 1,replaceB);
+                        fileData.set(guardY,replaceA);
+                        fileData.set(guardY + 1,replaceB);
                     } else {
-                        tagInd = -1;
+                        guardSym = ">";
+                        for (int i = 0; i < fileData.size(); i++) {
+                            System.out.println(fileData.get(i));
+                        }
+                        System.out.println();
                     }
-                    y--;
                 }
-                guardSym = ">";
-            } else if (guardSym.equals("v")) {
-                while (tagInd == -1) {
-                    if (!fileData.get(y + 1).substring(x, x + 1).equals("#")) {
-                        replaceA = fileData.get(y).substring(x - 1, x) + "X" + fileData.get(y).substring(x + 1);
-                        replaceB = fileData.get(y + 1).substring(x - 1, x) + "v" + fileData.get(y).substring(x + 1);
+            } else if (guardSym.equals(">")) {
+                for (int j = guardX + 1; j < fileData.get(guardX).length(); j++) {
+                    if (!fileData.get(guardY).substring(j, j + 1).equals("#")) {
+                        replaceA = fileData.get(guardY).substring(0, j) + "X>" + fileData.get(guardY).substring(j + 2);
                         //System.out.println(replaceA);
-                        //System.out.println(replaceB);
-                        fileData.set(y,replaceA);
-                        fileData.set(y + 1,replaceB);
+                        fileData.set(guardY,replaceA);
                     } else {
-                        tagInd = -1;
+                        guardSym = "v";
+                        for (int i = 0; i < fileData.size(); i++) {
+                            System.out.println(fileData.get(i));
+                        }
+                        System.out.println();
                     }
-                    y++;
                 }
-                guardSym = "<";
-            }
-            for (int i = 0; i < fileData.size(); i++) {
-                System.out.println(fileData.get(i));
-            }
-            for (int i = 0; i < fileData.size(); i++) {
-                if (fileData.get(i).indexOf("^") != -1) {
-                    guardX = fileData.get(i).indexOf("^");
-                    guardY = i;
-                    x = guardX;
-                    y = guardY - 1;
-                } else if (fileData.get(i).indexOf(">") != -1) {
-                    guardX = fileData.get(i).indexOf(">");
-                    guardY = i;
-                    x = guardX + 1;
-                    y = guardY;
-                } else if (fileData.get(i).indexOf("v") != -1) {
-                    guardX = fileData.get(i).indexOf("v");
-                    guardY = i;
-                    x = guardX;
-                    y = guardY + 1;
-                } else if (fileData.get(i).indexOf("<") != -1) {
-                    guardX = fileData.get(i).indexOf("<");
-                    guardY = i;
-                    x = guardX - 1;
-                    y = guardY;
+            } else if (guardSym.equals("<")) {
+                for (int j = guardX - 1; j > -1; j--) {
+                    if (!fileData.get(guardY).substring(j, j + 1).equals("#")) {
+                        replaceA = fileData.get(guardY).substring(0, j) + "<X" + fileData.get(guardY).substring(j + 2);
+                        //System.out.println(replaceA);
+                        fileData.set(guardY,replaceA);
+                    } else {
+                        guardSym = "^";
+                        for (int i = 0; i < fileData.size(); i++) {
+                            System.out.println(fileData.get(i));
+                        }
+                        System.out.println();
+                    }
                 }
             }
         }
